@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CursoionicApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CursoionicApplication.class, args);
+		SpringApplication.run(CursoionicApplication.class, args); 
 	}
 
 }
