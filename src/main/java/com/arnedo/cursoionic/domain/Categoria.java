@@ -2,11 +2,22 @@ package com.arnedo.cursoionic.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+@Entity
 public class Categoria implements Serializable {
 	
 
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
+	//@Column (name = "nomeCategoria")
+	// nao precisa colocar o nome de todos os campos. vai assumir o nome do atributo no banco
 	private String nome;
 	
 	public Categoria() {
