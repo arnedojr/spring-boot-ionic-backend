@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.arnedo.cursoionic.domain.Categoria;
 import com.arnedo.cursoionic.domain.Cidade;
+import com.arnedo.cursoionic.domain.Cliente;
+import com.arnedo.cursoionic.domain.Endereco;
 import com.arnedo.cursoionic.domain.Estado;
 import com.arnedo.cursoionic.domain.Produto;
+import com.arnedo.cursoionic.domain.enums.TipoCliente;
 import com.arnedo.cursoionic.repositories.CategoriaRepository;
 import com.arnedo.cursoionic.repositories.CidadeRepository;
+import com.arnedo.cursoionic.repositories.ClienteRepository;
+import com.arnedo.cursoionic.repositories.EnderecoRepository;
 import com.arnedo.cursoionic.repositories.EstadoRepository;
 import com.arnedo.cursoionic.repositories.ProdutoRepository;
 
@@ -22,15 +27,16 @@ public class CursoionicApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoionicApplication.class, args); 
@@ -69,6 +75,22 @@ public class CursoionicApplication implements CommandLineRunner {
 		// a cidade é dependente de um Estado criado, logo deverá ser salva depois 
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		//como o endereço depende de Cliente e Cidade, aquela entidade deve ser instanciada por último
+		//
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("273663323", "93838393"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
+		
+		Endereco e2 = new Endereco(null, "Av Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		//primeiro salvar a entidade independente
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
 	}
 
 }
