@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.arnedo.cursoionic.domain.Categoria;
 import com.arnedo.cursoionic.domain.Produto;
 import com.arnedo.cursoionic.repositories.CategoriaRepository;
+import com.arnedo.cursoionic.repositories.ProdutoRepository;
 
 
 @SpringBootApplication
@@ -17,6 +18,9 @@ public class CursoionicApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	
+	@Autowired
+	private ProdutoRepository produtoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoionicApplication.class, args); 
@@ -34,7 +38,12 @@ public class CursoionicApplication implements CommandLineRunner {
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 		
+		p1.getCategorias().addAll(Arrays.asList(cat1));
+		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
+		p3.getCategorias().addAll(Arrays.asList(cat1));
+		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 	}
 
 }
