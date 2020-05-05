@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -23,6 +26,9 @@ public class Categoria implements Serializable {
 	// nao precisa colocar o nome de todos os campos. vai assumir o nome do atributo no banco
 	private String nome;
 	
+	// como remover a referência ciclica 
+	// fazer do lado que quer que venha os objetos associados
+	@JsonManagedReference
 	@ManyToMany (mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	

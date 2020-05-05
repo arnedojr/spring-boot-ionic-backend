@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arnedo.cursoionic.domain.Categoria;
 import com.arnedo.cursoionic.services.CategoriaService;
+import com.arnedo.cursoionic.services.exceptions.ObjectNotFoundException;
+
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -37,8 +39,21 @@ public class CategoriaResource {
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		// o ? significa que pode retornar qualquer coisa.
 		
-		Categoria obj = service.buscar(id);
+		// Os controladores Rest devem ser minimizados... Será colocado um Handler para tratar a exceção
+		// para lançar a resposta http 
+		// Hadler é um manipulador de exceções dos recursos
+		/*
+		Categoria obj = null;
+		try {
+			obj = service.buscar(id);
+		} catch (ObjectNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok().body(obj);
+		*/
 		
+		Categoria obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
