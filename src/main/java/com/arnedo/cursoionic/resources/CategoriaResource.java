@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arnedo.cursoionic.domain.Categoria;
 import com.arnedo.cursoionic.services.CategoriaService;
-import com.arnedo.cursoionic.services.exceptions.ObjectNotFoundException;
 
 
 @RestController
