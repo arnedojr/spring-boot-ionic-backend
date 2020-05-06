@@ -30,6 +30,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	//vou proteger contra chamada cliclica, deixando o cliente conter a serialização dos endereços
 	@JsonManagedReference
@@ -108,6 +109,14 @@ public class Cliente implements Serializable {
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 
 	@Override
 	public int hashCode() {
