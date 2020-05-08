@@ -30,6 +30,9 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	
+	@JsonManagedReference
+	@OneToMany (mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	//vou proteger contra chamada cliclica, deixando o cliente conter a serialização dos endereços

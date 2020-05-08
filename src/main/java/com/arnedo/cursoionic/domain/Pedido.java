@@ -3,26 +3,51 @@ package com.arnedo.cursoionic.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+@Entity
 public class Pedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date instante;
+
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+
+	@ManyToOne
+	@JoinColumn (name = "endereco_de_entrega_id")
+	//como a associação é direcional, ou seja, não vai precisar estar em Endereco, só será mapeado aqui
 	private Endereco enderecoDeEntrega;
+
+	// cascade necessário, pois se não houvesse ocorreria erro de objeto transiente
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
 	public Pedido() {
 
 	}
 
-	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega, Pagamento pagamento) {
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
-		this.pagamento = pagamento;
 	}
 
 	public Integer getId() {
@@ -90,5 +115,4 @@ public class Pedido implements Serializable {
 		return true;
 	}
 
-	
 }

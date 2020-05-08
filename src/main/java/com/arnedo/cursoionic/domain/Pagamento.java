@@ -2,13 +2,37 @@ package com.arnedo.cursoionic.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+
 import com.arnedo.cursoionic.domain.enums.EstadoPagamento;
 
-public class Pagamento implements Serializable {
+@Entity
+@Inheritance (strategy = InheritanceType.JOINED)   // criando a anotação para herança, com a estrategia podendo ser de dois tipos: 
+//um tabelão, contendo os ids das duas subclasses, com melhor performance, porém gerando vários null na tabela
+// a outra ideia é gerar uma tabela para cada subclasse. Geralmente, quando há muitos atributos na subclasse, efetuamos a segunda opção
+
+//pagamento transformado em abastrado para garantir nao ser instanciada como Pagamento
+public abstract class Pagamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Id
 	private Integer id;
 	private Integer estado;
+
+	// como pedido irá conter um pagamento e o id do pagamento será utilizado pelo
+	// Pedido,
+	// não será gerado o Id automaticamente. Será usado o de Pedido.
+	@OneToOne
+	@JoinColumn(name = "pedido_id")
+	@MapsId // garante que o id do pedido seja o mesmo do Pedido id para o 
+	//identificador de Pagamento
 	private Pedido pedido;
 
 	public Pagamento() {
