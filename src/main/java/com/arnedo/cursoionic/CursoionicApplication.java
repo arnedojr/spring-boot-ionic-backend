@@ -13,6 +13,7 @@ import com.arnedo.cursoionic.domain.Cidade;
 import com.arnedo.cursoionic.domain.Cliente;
 import com.arnedo.cursoionic.domain.Endereco;
 import com.arnedo.cursoionic.domain.Estado;
+import com.arnedo.cursoionic.domain.ItemPedido;
 import com.arnedo.cursoionic.domain.Pagamento;
 import com.arnedo.cursoionic.domain.PagamentoComBoleto;
 import com.arnedo.cursoionic.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.arnedo.cursoionic.repositories.CidadeRepository;
 import com.arnedo.cursoionic.repositories.ClienteRepository;
 import com.arnedo.cursoionic.repositories.EnderecoRepository;
 import com.arnedo.cursoionic.repositories.EstadoRepository;
+import com.arnedo.cursoionic.repositories.ItemPedidoRepository;
 import com.arnedo.cursoionic.repositories.PagamentoRepository;
 import com.arnedo.cursoionic.repositories.PedidoRepository;
 import com.arnedo.cursoionic.repositories.ProdutoRepository;
@@ -49,6 +51,8 @@ public class CursoionicApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -124,6 +128,19 @@ public class CursoionicApplication implements CommandLineRunner {
 		
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped1, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 
