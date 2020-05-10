@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.arnedo.cursoionic.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -31,7 +32,7 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 	
 	
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany (mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
