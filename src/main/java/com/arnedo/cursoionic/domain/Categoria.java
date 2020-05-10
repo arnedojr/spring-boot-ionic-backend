@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Categoria implements Serializable {
 	
@@ -26,7 +24,6 @@ public class Categoria implements Serializable {
 	
 	// como remover a referência ciclica 
 	// fazer do lado que quer que venha os objetos associados
-	@JsonManagedReference
 	@ManyToMany (mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	

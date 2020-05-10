@@ -11,7 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.arnedo.cursoionic.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance (strategy = InheritanceType.JOINED)   // criando a anotação para herança, com a estrategia podendo ser de dois tipos: 
@@ -30,7 +30,7 @@ public abstract class Pagamento implements Serializable {
 	// como pedido irá conter um pagamento e o id do pagamento será utilizado pelo
 	// Pedido,
 	// não será gerado o Id automaticamente. Será usado o de Pedido.
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId // garante que o id do pedido seja o mesmo do Pedido id para o 
