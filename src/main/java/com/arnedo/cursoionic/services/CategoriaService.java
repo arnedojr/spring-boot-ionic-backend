@@ -42,4 +42,8 @@ public class CategoriaService {
 		return obj;
 	}
 	
+	public Categoria insert(Categoria obj) {
+		obj.setId(null); //garantindo que o objeto passado seja criado novo e não como uma alteração
+		return repo.save(obj);
+	}
 }
