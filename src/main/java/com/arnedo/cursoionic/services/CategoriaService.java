@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.arnedo.cursoionic.domain.Categoria;
+import com.arnedo.cursoionic.dto.CategoriaDTO;
 import com.arnedo.cursoionic.repositories.CategoriaRepository;
 import com.arnedo.cursoionic.services.exceptions.DataIntegrityException;
 import com.arnedo.cursoionic.services.exceptions.ObjectNotFoundException;
@@ -74,5 +75,9 @@ public class CategoriaService {
 	// a contagem de página começa com zero
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		return repo.findAll(PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy));		
+	}
+	
+	public Categoria fromDTO (CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }
