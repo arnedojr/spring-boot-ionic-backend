@@ -3,6 +3,7 @@ package com.arnedo.cursoionic.resources;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.arnedo.cursoionic.domain.Categoria;
+import com.arnedo.cursoionic.dto.CategoriaDTO;
 import com.arnedo.cursoionic.services.CategoriaService;
 
 
@@ -83,9 +85,19 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	/*
 	@RequestMapping (method = RequestMethod.GET)
 	public ResponseEntity<List<Categoria>> findAll() {
 		List<Categoria> list =  service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
+	*/
+	
+	@RequestMapping (method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list =  service.findAll();
+		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
+	}
+	
 }
